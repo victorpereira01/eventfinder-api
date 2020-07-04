@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.victorpereira.mymarketplace.dto.UserDTO;
+import com.victorpereira.mymarketplace.models.Event;
 import com.victorpereira.mymarketplace.models.User;
+import com.victorpereira.mymarketplace.repositories.EventRepository;
 import com.victorpereira.mymarketplace.repositories.UserRepository;
 import com.victorpereira.mymarketplace.resources.exceptions.ObjectNotFoundException;
 import com.victorpereira.mymarketplace.resources.utils.Utils;
@@ -24,6 +27,9 @@ public class UserResource {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private EventRepository eventRepo;
 
 	@GetMapping()
 	public List<User> findAll() {
@@ -40,6 +46,14 @@ public class UserResource {
 	@PostMapping
 	public User insert(@RequestBody User user) {
 		return userRepo.save(user);
+	}
+	
+	//Create event via client
+	@PostMapping(value = "/{id}/events") 
+	public Event createEvent(@RequestBody Event event, @PathVariable Integer id) {
+		UserDTO user = new UserDTO(findById(id));
+		event.setOwner(user);
+		return eventRepo.save(event);
 	}
 
 	@DeleteMapping(value = "/{id}")

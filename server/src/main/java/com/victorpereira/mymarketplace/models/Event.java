@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.victorpereira.mymarketplace.dto.UserDTO;
 
 @Entity
 @Table(name="tb_event")
@@ -33,6 +34,8 @@ public class Event implements Serializable {
 
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date endDate; 
+	
+	private UserDTO owner;
 	
 	public Event() {
 	}
@@ -102,6 +105,14 @@ public class Event implements Serializable {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public UserDTO getOwner() {
+		return owner;
+	}
+
+	public void setOwner(UserDTO owner) {
+		this.owner = owner;
 	}
 
 	@Override

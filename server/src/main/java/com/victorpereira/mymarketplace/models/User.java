@@ -9,23 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_user")
+@Table(name = "tb_user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String name;
- 
+
 	private String email;
-	
+
 	private String username;
-	
+
 	private String password;
-	
-	public User() {}
+
+	public User() {
+	}
 
 	public User(Integer id, String name, String email, String password) {
 		super();
