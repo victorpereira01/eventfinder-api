@@ -55,6 +55,13 @@ public class UserResource {
 		return eventRepo.save(event);
 	}
 
+	// Get user events
+	@GetMapping(value = "/{id}/events")
+	public List<Event> listEvents(@PathVariable Integer id) {
+		List<Event> list = eventRepo.findEvents(id);
+		return list;
+	}
+
 	@DeleteMapping(value = "/{id}")
 	public void delete(@PathVariable Integer id) {
 		User user = findById(id);

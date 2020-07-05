@@ -42,6 +42,7 @@ public class EventResource {
 		eventRepo.delete(user);
 	}
 
+	//Only for testing
 	@PutMapping(value = "/{id}")
 	public Event update(@RequestBody Event event, @PathVariable Integer id) {
 		Event obj = findById(id);
