@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.victorpereira.mymarketplace.dto.UserDTO;
 import com.victorpereira.mymarketplace.models.Event;
 import com.victorpereira.mymarketplace.models.User;
 import com.victorpereira.mymarketplace.repositories.EventRepository;
@@ -27,7 +26,7 @@ public class UserResource {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private EventRepository eventRepo;
 
@@ -47,11 +46,11 @@ public class UserResource {
 	public User insert(@RequestBody User user) {
 		return userRepo.save(user);
 	}
-	
-	//Create event via client
-	@PostMapping(value = "/{id}/events") 
+
+	// Create event via user
+	@PostMapping(value = "/{id}/events")
 	public Event createEvent(@RequestBody Event event, @PathVariable Integer id) {
-		UserDTO user = new UserDTO(findById(id));
+		User user = findById(id);
 		event.setOwner(user);
 		return eventRepo.save(event);
 	}
@@ -66,7 +65,7 @@ public class UserResource {
 	public User update(@RequestBody User user, @PathVariable Integer id) {
 		User obj = findById(id);
 		obj = Utils.validateUserFields(user, obj);
-		
+
 		return userRepo.save(obj);
 	}
 }

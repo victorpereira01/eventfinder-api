@@ -7,10 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.victorpereira.mymarketplace.dto.UserDTO;
 
 @Entity
 @Table(name="tb_event")
@@ -35,7 +36,9 @@ public class Event implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date endDate; 
 	
-	private UserDTO owner;
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	private User owner;
 	
 	public Event() {
 	}
@@ -107,11 +110,11 @@ public class Event implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public UserDTO getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
-	public void setOwner(UserDTO owner) {
+	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 
