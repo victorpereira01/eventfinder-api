@@ -14,4 +14,7 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Event obj WHERE obj.owner.id = :ownerId ORDER BY obj.initialDate")
 	public List<Event> findEvents(@Param("ownerId")Integer owner_id);
+	
+	@Transactional(readOnly = true)
+	public Event findByName(String name);
 }
