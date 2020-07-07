@@ -11,5 +11,4 @@ public class UserService {
 	public UserDTO toDto(User obj) {
 		return new UserDTO(obj);
 	}
-	
 }

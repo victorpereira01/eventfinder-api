@@ -21,6 +21,7 @@ import com.victorpereira.mymarketplace.repositories.EventRepository;
 import com.victorpereira.mymarketplace.repositories.UserRepository;
 import com.victorpereira.mymarketplace.resources.exceptions.ObjectNotFoundException;
 import com.victorpereira.mymarketplace.resources.utils.Utils;
+import com.victorpereira.mymarketplace.services.EventService;
 import com.victorpereira.mymarketplace.services.UserService;
 
 @RestController
@@ -35,6 +36,9 @@ public class UserResource {
 
 	@Autowired
 	private EventRepository eventRepo;
+	
+	@Autowired
+	private EventService eventService;
 
 	// Only for testing
 	@GetMapping()
@@ -86,15 +90,30 @@ public class UserResource {
 		}
 		return listDto;
 	}
-	
+
 	// Delete an event via user
 	@DeleteMapping(value = "/{id}/events/{event_id}")
 	public void deleteEvent(@PathVariable Integer id, @PathVariable Integer event_id) {
 		List<EventDTO> events = listEvents(id);
 		for (EventDTO e : events) {
-			if(e.getId() == event_id) {
+			if (e.getId() == event_id) {
 				eventRepo.deleteById(event_id);
 			}
 		}
+	}
+
+	// Updating an event via user
+	@PutMapping(value = "/{id}/events/{event_id}")
+	public Event updateEvent(@RequestBody Event event, @PathVariable Integer id, @PathVariable Integer event_id) {
+		List<EventDTO> events = listEvents(id);
+		for (EventDTO e : events) {
+			if (e.getId() == event_id) {
+				Event obj = eventService.toEvent(e);
+				obj.setOwner(findById(id));
+				obj = Utils.validateEventFields(event, obj);
+				return eventRepo.save(obj);
+			}
+		}
+		return null;
 	}
 }
