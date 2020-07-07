@@ -36,6 +36,7 @@ public class EventResource {
 				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Event.class.getName()));
 	}
 	
+	//Only for testing
 	@DeleteMapping(value = "/{id}")
 	public void delete(@PathVariable Integer id) {
 		Event user = findById(id);

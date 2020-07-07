@@ -2,6 +2,7 @@ package com.victorpereira.mymarketplace.resources;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.victorpereira.mymarketplace.dto.EventDTO;
 import com.victorpereira.mymarketplace.models.Event;
 import com.victorpereira.mymarketplace.models.User;
 import com.victorpereira.mymarketplace.repositories.EventRepository;
 import com.victorpereira.mymarketplace.repositories.UserRepository;
 import com.victorpereira.mymarketplace.resources.exceptions.ObjectNotFoundException;
 import com.victorpereira.mymarketplace.resources.utils.Utils;
+import com.victorpereira.mymarketplace.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -28,8 +31,12 @@ public class UserResource {
 	private UserRepository userRepo;
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private EventRepository eventRepo;
 
+	// Only for testing
 	@GetMapping()
 	public List<User> findAll() {
 		return userRepo.findAll();
@@ -47,21 +54,6 @@ public class UserResource {
 		return userRepo.save(user);
 	}
 
-	// Create event via user
-	@PostMapping(value = "/{id}/events")
-	public Event createEvent(@RequestBody Event event, @PathVariable Integer id) {
-		User user = findById(id);
-		event.setOwner(user);
-		return eventRepo.save(event);
-	}
-
-	// Get user events
-	@GetMapping(value = "/{id}/events")
-	public List<Event> listEvents(@PathVariable Integer id) {
-		List<Event> list = eventRepo.findEvents(id);
-		return list;
-	}
-
 	@DeleteMapping(value = "/{id}")
 	public void delete(@PathVariable Integer id) {
 		User user = findById(id);
@@ -74,5 +66,24 @@ public class UserResource {
 		obj = Utils.validateUserFields(user, obj);
 
 		return userRepo.save(obj);
+	}
+
+	// Create event via user
+	@PostMapping(value = "/{id}/events")
+	public Event createEvent(@RequestBody Event event, @PathVariable Integer id) {
+		User user = findById(id);
+		event.setOwner(user);
+		return eventRepo.save(event);
+	}
+
+	// Get user events
+	@GetMapping(value = "/{id}/events")
+	public List<EventDTO> listEvents(@PathVariable Integer id) {
+		List<Event> list = eventRepo.findEvents(id);
+		List<EventDTO> listDto = list.stream().map(obj -> new EventDTO(obj)).collect(Collectors.toList());
+		for (EventDTO x : listDto) {
+			x.setOwner(userService.toDto(findById(id)));
+		}
+		return listDto;
 	}
 }
