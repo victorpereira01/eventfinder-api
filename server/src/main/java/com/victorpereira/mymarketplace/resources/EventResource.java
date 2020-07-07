@@ -18,37 +18,37 @@ import com.victorpereira.mymarketplace.resources.exceptions.ObjectNotFoundExcept
 import com.victorpereira.mymarketplace.resources.utils.Utils;
 
 @RestController
-@RequestMapping(value="/events")
+@RequestMapping(value = "/events")
 public class EventResource {
-	
+
 	@Autowired
 	private EventRepository eventRepo;
-	
+
 	@GetMapping
-	public List<Event> findAll(){
+	public List<Event> findAll() {
 		return eventRepo.findAll();
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public Event findById(@PathVariable Integer id) {
 		Optional<Event> user = eventRepo.findById(id);
 		return user.orElseThrow(
 				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Event.class.getName()));
 	}
-	
-	//Only for testing
+
+	// Only for testing
 	@DeleteMapping(value = "/{id}")
 	public void delete(@PathVariable Integer id) {
 		Event user = findById(id);
 		eventRepo.delete(user);
 	}
 
-	//Only for testing
+	// Only for testing
 	@PutMapping(value = "/{id}")
 	public Event update(@RequestBody Event event, @PathVariable Integer id) {
 		Event obj = findById(id);
 		obj = Utils.validateEventFields(event, obj);
-		
+
 		return eventRepo.save(obj);
 	}
 }

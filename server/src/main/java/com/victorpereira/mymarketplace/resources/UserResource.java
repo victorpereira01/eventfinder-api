@@ -76,7 +76,7 @@ public class UserResource {
 		return eventRepo.save(event);
 	}
 
-	// Get user events
+	// Get events from a user
 	@GetMapping(value = "/{id}/events")
 	public List<EventDTO> listEvents(@PathVariable Integer id) {
 		List<Event> list = eventRepo.findEvents(id);
@@ -85,5 +85,16 @@ public class UserResource {
 			x.setOwner(userService.toDto(findById(id)));
 		}
 		return listDto;
+	}
+	
+	// Delete an event via user
+	@DeleteMapping(value = "/{id}/events/{event_id}")
+	public void deleteEvent(@PathVariable Integer id, @PathVariable Integer event_id) {
+		List<EventDTO> events = listEvents(id);
+		for (EventDTO e : events) {
+			if(e.getId() == event_id) {
+				eventRepo.deleteById(event_id);
+			}
+		}
 	}
 }
