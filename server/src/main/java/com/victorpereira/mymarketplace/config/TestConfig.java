@@ -30,7 +30,7 @@ public class TestConfig {
 		User u2 = new User(null, "Pelé", "pele@gmail.com", "reidofut", "123");
 		User u3 = new User(null, "Cris Ronaldo", "cr7@gmail.com", "cr7", "123");
 		User u4 = new User(null, "Marta", "marta@gmail.com", "marta001", "123");
-		userRepo.saveAll(Arrays.asList(u1, u2, u3, u4));
+		
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Event e1 = new Event(null, "Rock in Rio", "RJ", "Rio de Janeiro", "Rua X", sdf.parse("21/01/2021 12:00"),
@@ -45,6 +45,23 @@ public class TestConfig {
 		e2.setOwner(u4);
 		e3.setOwner(u1);
 		e4.setOwner(u3);
+		
+		u1.getSubEvents().add(e1);
+		u1.getSubEvents().add(e2);
+		u2.getSubEvents().add(e1);
+		u2.getSubEvents().add(e3);
+		u3.getSubEvents().add(e4);
+		
+		userRepo.saveAll(Arrays.asList(u1, u2, u3, u4));
+		
+		e1.getUsers().addAll(Arrays.asList(u1,u2));
+		e2.getUsers().add(u1);
+		e3.getUsers().add(u2);
+		e4.getUsers().add(u3);
+		
+		
+		
+		
 		eventRepo.saveAll(Arrays.asList(e1, e2, e3, e4));
 
 		return true;

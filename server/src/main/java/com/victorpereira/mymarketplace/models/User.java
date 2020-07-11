@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,6 +37,10 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "owner")
 	private List<Event> events = new ArrayList<>();
+	
+	
+	@ManyToMany(mappedBy = "users")
+	private List<Event> subEvents = new ArrayList<>();
 
 	public User() {
 	}
