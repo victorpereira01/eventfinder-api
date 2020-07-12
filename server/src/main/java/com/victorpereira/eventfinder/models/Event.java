@@ -44,6 +44,7 @@ public class Event implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date endDate;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private User owner;

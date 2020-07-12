@@ -12,8 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
 @Data
@@ -34,10 +32,8 @@ public class User implements Serializable {
 
 	private String password;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "owner")
 	private List<Event> events = new ArrayList<>();
-	
 	
 	@ManyToMany(mappedBy = "users")
 	private List<Event> subEvents = new ArrayList<>();

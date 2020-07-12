@@ -59,9 +59,6 @@ public class TestConfig {
 		e3.getUsers().add(u2);
 		e4.getUsers().add(u3);
 		
-		
-		
-		
 		eventRepo.saveAll(Arrays.asList(e1, e2, e3, e4));
 
 		return true;
