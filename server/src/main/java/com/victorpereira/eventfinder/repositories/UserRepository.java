@@ -1,8 +1,8 @@
-package com.victorpereira.mymarketplace.repositories;
+package com.victorpereira.eventfinder.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.victorpereira.mymarketplace.models.User;
+import com.victorpereira.eventfinder.models.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 

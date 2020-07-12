@@ -1,4 +1,4 @@
-package com.victorpereira.mymarketplace.models;
+package com.victorpereira.eventfinder.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;

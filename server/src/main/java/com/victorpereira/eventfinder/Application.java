@@ -1,4 +1,4 @@
-package com.victorpereira.mymarketplace;
+package com.victorpereira.eventfinder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

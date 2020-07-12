@@ -1,4 +1,4 @@
-package com.victorpereira.mymarketplace.config;
+package com.victorpereira.eventfinder.config;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.victorpereira.mymarketplace.models.Event;
-import com.victorpereira.mymarketplace.models.User;
-import com.victorpereira.mymarketplace.repositories.EventRepository;
-import com.victorpereira.mymarketplace.repositories.UserRepository;
+import com.victorpereira.eventfinder.models.Event;
+import com.victorpereira.eventfinder.models.User;
+import com.victorpereira.eventfinder.repositories.EventRepository;
+import com.victorpereira.eventfinder.repositories.UserRepository;
 
 @Configuration
 @Profile("test")

@@ -1,9 +1,9 @@
-package com.victorpereira.mymarketplace.dto;
+package com.victorpereira.eventfinder.dto;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.victorpereira.mymarketplace.models.Event;
+import com.victorpereira.eventfinder.models.Event;
 
 import lombok.Data;
 

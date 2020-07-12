@@ -1,4 +1,4 @@
-package com.victorpereira.mymarketplace.resources;
+package com.victorpereira.eventfinder.resources;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.victorpereira.mymarketplace.models.Event;
-import com.victorpereira.mymarketplace.repositories.EventRepository;
-import com.victorpereira.mymarketplace.resources.exceptions.ObjectNotFoundException;
+import com.victorpereira.eventfinder.models.Event;
+import com.victorpereira.eventfinder.repositories.EventRepository;
+import com.victorpereira.eventfinder.resources.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/events")

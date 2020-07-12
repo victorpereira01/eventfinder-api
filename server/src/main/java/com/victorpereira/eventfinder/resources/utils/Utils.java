@@ -1,7 +1,7 @@
-package com.victorpereira.mymarketplace.resources.utils;
+package com.victorpereira.eventfinder.resources.utils;
 
-import com.victorpereira.mymarketplace.models.Event;
-import com.victorpereira.mymarketplace.models.User;
+import com.victorpereira.eventfinder.models.Event;
+import com.victorpereira.eventfinder.models.User;
 
 public class Utils {
 

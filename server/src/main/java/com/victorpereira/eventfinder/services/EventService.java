@@ -1,9 +1,9 @@
-package com.victorpereira.mymarketplace.services;
+package com.victorpereira.eventfinder.services;
 
 import org.springframework.stereotype.Service;
 
-import com.victorpereira.mymarketplace.dto.EventDTO;
-import com.victorpereira.mymarketplace.models.Event;
+import com.victorpereira.eventfinder.dto.EventDTO;
+import com.victorpereira.eventfinder.models.Event;
 
 @Service
 public class EventService {

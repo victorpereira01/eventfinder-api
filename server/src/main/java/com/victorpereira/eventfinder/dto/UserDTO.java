@@ -1,8 +1,8 @@
-package com.victorpereira.mymarketplace.dto;
+package com.victorpereira.eventfinder.dto;
 
 import java.io.Serializable;
 
-import com.victorpereira.mymarketplace.models.User;
+import com.victorpereira.eventfinder.models.User;
 
 import lombok.Data;
 

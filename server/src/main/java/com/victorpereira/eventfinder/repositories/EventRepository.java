@@ -1,4 +1,4 @@
-package com.victorpereira.mymarketplace.repositories;
+package com.victorpereira.eventfinder.repositories;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.victorpereira.mymarketplace.models.Event;
+import com.victorpereira.eventfinder.models.Event;
 
 public interface EventRepository extends JpaRepository<Event, Integer>{
 

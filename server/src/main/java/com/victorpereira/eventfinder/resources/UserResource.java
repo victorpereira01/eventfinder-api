@@ -1,4 +1,4 @@
-package com.victorpereira.mymarketplace.resources;
+package com.victorpereira.eventfinder.resources;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.victorpereira.mymarketplace.dto.EventDTO;
-import com.victorpereira.mymarketplace.models.Event;
-import com.victorpereira.mymarketplace.models.User;
-import com.victorpereira.mymarketplace.repositories.EventRepository;
-import com.victorpereira.mymarketplace.repositories.UserRepository;
-import com.victorpereira.mymarketplace.resources.exceptions.ObjectNotFoundException;
-import com.victorpereira.mymarketplace.resources.utils.Utils;
-import com.victorpereira.mymarketplace.services.EventService;
-import com.victorpereira.mymarketplace.services.UserService;
+import com.victorpereira.eventfinder.dto.EventDTO;
+import com.victorpereira.eventfinder.models.Event;
+import com.victorpereira.eventfinder.models.User;
+import com.victorpereira.eventfinder.repositories.EventRepository;
+import com.victorpereira.eventfinder.repositories.UserRepository;
+import com.victorpereira.eventfinder.resources.exceptions.ObjectNotFoundException;
+import com.victorpereira.eventfinder.resources.utils.Utils;
+import com.victorpereira.eventfinder.services.EventService;
+import com.victorpereira.eventfinder.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
