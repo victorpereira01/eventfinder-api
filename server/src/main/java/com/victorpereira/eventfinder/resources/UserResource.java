@@ -98,6 +98,7 @@ public class UserResource {
 		for (EventDTO e : events) {
 			if (e.getId() == event_id) {
 				eventRepo.deleteById(event_id);
+				break;
 			}
 		}
 	}
@@ -115,5 +116,24 @@ public class UserResource {
 			}
 		}
 		return null;
+	}
+	
+	// Get subscribed events of a user
+	@GetMapping(value="/{id}/subevents") 
+	public List<Event> subscribedEvents(@PathVariable Integer id) {
+		List<Event> list = eventRepo.findAll();
+		return eventRepo.subscribedEvents(list, findById(id));
+	}
+	
+	// Delete a subscribed event of a user
+	@DeleteMapping(value="/{id}/subevents/{event_id}")
+	public void deleteSubscribedEvent(@PathVariable Integer id, @PathVariable Integer event_id) {
+		List<Event> list = eventRepo.subscribedEvents(eventRepo.findAll(), findById(id));
+		for(Event x : list) {
+			if(x.getId() == event_id) {
+				eventRepo.deleteById(event_id);
+				break;
+			}
+		}
 	}
 }
