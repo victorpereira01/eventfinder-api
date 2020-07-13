@@ -1,7 +1,6 @@
 package com.victorpereira.eventfinder.resources;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,31 +10,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.victorpereira.eventfinder.models.Event;
-import com.victorpereira.eventfinder.repositories.EventRepository;
-import com.victorpereira.eventfinder.resources.exceptions.ObjectNotFoundException;
+import com.victorpereira.eventfinder.services.EventService;
 
 @RestController
 @RequestMapping(value = "/events")
 public class EventResource {
 
 	@Autowired
-	private EventRepository eventRepo;
+	private EventService eventService;
 
-	
 	@GetMapping
 	public List<Event> findAll() {
-		return eventRepo.findAll();
+		return eventService.findAll();
 	}
 
 	@GetMapping(value="/")
 	public Event findByName(@RequestParam(value="name") String name) {
-		return eventRepo.findByName(name);
+		return eventService.findByName(name);
 	}
 		
 	@GetMapping(value = "/{id}")
 	public Event findById(@PathVariable Integer id) {
-		Optional<Event> user = eventRepo.findById(id);
-		return user.orElseThrow(
-				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Event.class.getName()));
+		return eventService.findById(id);
 	}
 }

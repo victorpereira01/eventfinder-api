@@ -1,8 +1,6 @@
 package com.victorpereira.eventfinder.resources;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.victorpereira.eventfinder.dto.EventDTO;
 import com.victorpereira.eventfinder.models.Event;
 import com.victorpereira.eventfinder.models.User;
-import com.victorpereira.eventfinder.repositories.EventRepository;
-import com.victorpereira.eventfinder.repositories.UserRepository;
-import com.victorpereira.eventfinder.resources.exceptions.ObjectNotFoundException;
-import com.victorpereira.eventfinder.resources.utils.Utils;
 import com.victorpereira.eventfinder.services.EventService;
 import com.victorpereira.eventfinder.services.UserService;
 
@@ -29,13 +23,7 @@ import com.victorpereira.eventfinder.services.UserService;
 public class UserResource {
 
 	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private EventRepository eventRepo;
 	
 	@Autowired
 	private EventService eventService;
@@ -43,97 +31,63 @@ public class UserResource {
 	// Only for testing
 	@GetMapping()
 	public List<User> findAll() {
-		return userRepo.findAll();
+		return userService.findAll();
 	}
 
 	@GetMapping(value = "/{id}")
 	public User findById(@PathVariable Integer id) {
-		Optional<User> user = userRepo.findById(id);
-		return user.orElseThrow(
-				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + User.class.getName()));
+		return userService.findById(id);
 	}
 
 	@PostMapping
 	public User insert(@RequestBody User user) {
-		return userRepo.save(user);
+		return userService.insert(user);
 	}
-
+	
 	@DeleteMapping(value = "/{id}")
-	public void delete(@PathVariable Integer id) {
-		User user = findById(id);
-		userRepo.delete(user);
+	public void deleteById(@PathVariable Integer id) {
+		userService.deleteById(id);
 	}
 
 	@PutMapping(value = "/{id}")
 	public User update(@RequestBody User user, @PathVariable Integer id) {
-		User obj = findById(id);
-		obj = Utils.validateUserFields(user, obj);
-
-		return userRepo.save(obj);
+		return userService.update(user, id);
 	}
 
 	// Create event via user
 	@PostMapping(value = "/{id}/events")
 	public Event createEvent(@RequestBody Event event, @PathVariable Integer id) {
-		User user = findById(id);
-		event.setOwner(user);
-		return eventRepo.save(event);
+		return eventService.createEvent(event, findById(id));
 	}
 
 	// Get events from a user
 	@GetMapping(value = "/{id}/events")
-	public List<EventDTO> listEvents(@PathVariable Integer id) {
-		List<Event> list = eventRepo.findEvents(id);
-		List<EventDTO> listDto = list.stream().map(obj -> new EventDTO(obj)).collect(Collectors.toList());
-		for (EventDTO x : listDto) {
-			x.setOwner(userService.toDto(findById(id)));
-		}
-		return listDto;
+	public List<EventDTO> getUserEvents(@PathVariable Integer id) {
+		return eventService.getUserEvents(id);
 	}
 
 	// Delete an event via user
 	@DeleteMapping(value = "/{id}/events/{event_id}")
-	public void deleteEvent(@PathVariable Integer id, @PathVariable Integer event_id) {
-		List<EventDTO> events = listEvents(id);
-		for (EventDTO e : events) {
-			if (e.getId() == event_id) {
-				eventRepo.deleteById(event_id);
-				break;
-			}
-		}
+	public void deleteUserEvent(@PathVariable Integer id, @PathVariable Integer eventId) {
+		eventService.deleteUserEvent(id, eventId);
 	}
 
 	// Updating an event via user
 	@PutMapping(value = "/{id}/events/{event_id}")
-	public Event updateEvent(@RequestBody Event event, @PathVariable Integer id, @PathVariable Integer event_id) {
-		List<EventDTO> events = listEvents(id);
-		for (EventDTO e : events) {
-			if (e.getId() == event_id) {
-				Event obj = eventService.toEvent(e);
-				obj.setOwner(findById(id));
-				obj = Utils.validateEventFields(event, obj);
-				return eventRepo.save(obj);
-			}
-		}
-		return null;
+	public Event updateUserEvent(@RequestBody Event event, @PathVariable Integer id, @PathVariable Integer eventId) {
+		return eventService.updateUserEvent(event, id, eventId);
 	}
 	
 	// Get subscribed events of a user
 	@GetMapping(value="/{id}/subevents") 
-	public List<Event> subscribedEvents(@PathVariable Integer id) {
-		List<Event> list = eventRepo.findAll();
-		return eventRepo.subscribedEvents(list, findById(id));
+	public List<Event> getUserSubscribedEvents(@PathVariable Integer id) {
+		return eventService.getUserSubscribedEvents(eventService.findAll(), findById(id));
 	}
 	
 	// Delete a subscribed event of a user
 	@DeleteMapping(value="/{id}/subevents/{event_id}")
-	public void deleteSubscribedEvent(@PathVariable Integer id, @PathVariable Integer event_id) {
-		List<Event> list = eventRepo.subscribedEvents(eventRepo.findAll(), findById(id));
-		for(Event x : list) {
-			if(x.getId() == event_id) {
-				eventRepo.deleteById(event_id);
-				break;
-			}
-		}
+	public void deleteUserSubscribedEvent(@PathVariable Integer id, @PathVariable Integer event_id) {
+		List<Event> list = eventService.getUserSubscribedEvents(eventService.findAll(), findById(id));
+		eventService.findAndDelete(list, event_id);
 	}
 }
