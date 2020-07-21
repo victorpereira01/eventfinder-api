@@ -14,7 +14,7 @@ import com.victorpereira.eventfinder.models.Event;
 import com.victorpereira.eventfinder.models.User;
 import com.victorpereira.eventfinder.repositories.EventRepository;
 import com.victorpereira.eventfinder.resources.exceptions.ObjectNotFoundException;
-import com.victorpereira.eventfinder.resources.utils.Utils;
+import com.victorpereira.eventfinder.services.utils.Utils;
 
 @Service
 public class EventService {

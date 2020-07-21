@@ -10,7 +10,7 @@ import com.victorpereira.eventfinder.dto.UserDTO;
 import com.victorpereira.eventfinder.models.User;
 import com.victorpereira.eventfinder.repositories.UserRepository;
 import com.victorpereira.eventfinder.resources.exceptions.ObjectNotFoundException;
-import com.victorpereira.eventfinder.resources.utils.Utils;
+import com.victorpereira.eventfinder.services.utils.Utils;
 
 @Service
 public class UserService {

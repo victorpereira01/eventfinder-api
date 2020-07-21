@@ -1,4 +1,4 @@
-package com.victorpereira.eventfinder.resources.utils;
+package com.victorpereira.eventfinder.services.utils;
 
 import com.victorpereira.eventfinder.models.Event;
 import com.victorpereira.eventfinder.models.User;
